@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::redirect('/', '/login');
 
 // Route::get('/{any}', function($any){
 //     redirect('/')
@@ -25,4 +27,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/logout', 'LoginController@logout');
+Route::get('/logout', 'Auth\LoginController@logout');
+
+//Departments
+Route::resource('/department', 'DepartmentController');
+Route::get('departments/add', 'DepartmentController@departmentadd');
+
+Route::resource('/doctor', 'DoctorController');
+Route::get('doctors/add', 'DoctorController@DoctorAdd');
