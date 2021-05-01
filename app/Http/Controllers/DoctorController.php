@@ -19,7 +19,7 @@ class DoctorController extends Controller
     public function index()
     {
         return view('backend.doctor.list', [
-            'doctors' => Doctor::all(),
+            'doctors' => Doctor::with('department')->get()
         ]);
     }
 
@@ -55,7 +55,7 @@ class DoctorController extends Controller
             'email' => 'required|email|unique:doctors',
             'password' => 'required',
             'designation' => 'nullable|string|max:250',
-            'department' => 'nullable|string|max:250',
+            'department_id' => 'nullable|string|max:250',
             'address' => 'required',
             'phone' => 'nullable|string',
             'mobile' => 'required|min:5|max:15|regex:/[0-9]{9}/|not_regex:/(([a-zA-z])(\d)?$)/u',

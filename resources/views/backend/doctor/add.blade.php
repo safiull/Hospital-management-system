@@ -126,7 +126,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <select style="border: 1px solid #ced4da !important;" id="department" name="department" class="selectpicker form-control" data-live-search="true">
+                                    <select style="border: 1px solid #ced4da !important;" id="department" name="department_id" class="selectpicker form-control" data-live-search="true">
                                       <option>Select Department</option>
                                       @foreach ($depertments as $depertment)
                                         <option value="{{ $depertment->id }}">{{ $depertment->name }}</option>

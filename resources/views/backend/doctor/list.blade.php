@@ -74,10 +74,13 @@
                             <th>SL.NO</th>
                             <th>Image</th>
                             <th>Name</th>
-                            <th>E-mail</th>
+                            <th>First name</th>
+                            <th>Last name</th>
                             <th>Department</th>
+                            <th>E-mail</th>
                             <th>Designation</th>
                             <th>Mobile</th>
+                            <th>Phone</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -88,17 +91,22 @@
                                 <td>
                                     <img style="max-width: 50px" src="{{ asset('dashboard/photo/doctor_image') }}/{{ $doctor->image }}" class="img-fluid" alt="">
                                 </td>
-                                <td>{{ $doctor->first_name }}</th>
-                                <td>{{ $doctor->email }}</th>
-                                <td>{{ $doctor->department }}</th>
-                                <td>{{ $doctor->designation }}</th>
-                                <td>{{ $doctor->mobile }}</th>
+                                <td>{{ $doctor->first_name }}</td>
+                                <td>{{ $doctor->last_name }}</td>
+                                <td>{{ $doctor->department->name }}</td>
+                                <td>{{ $doctor->email }}</td>
+                                <td>{{ $doctor->designation }}</td>
+                                <td>{{ $doctor->mobile }}</td>
+                                <td>{{ $doctor->phone }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <a class="btn btn-warning btn-sm" href="{{ route('department.show', $doctor->id) }}">
+                                        <a class="btn btn-info btn-sm" href="{{ route('doctor.edit', $doctor->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <form method="POST" action="{{ route('department.destroy', $doctor->id) }}">
+                                        <a class="btn btn-warning btn-sm" href="{{ route('doctor.show', $doctor->id) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <form method="POST" action="{{ route('doctor.destroy', $doctor->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

@@ -20,7 +20,7 @@ class CreateDoctorsTable extends Migration
             $table->string('email')->nullable(false);
             $table->string('password')->nullable(false);
             $table->string('designation')->nullable();
-            $table->string('department')->nullable();
+            $table->string('department_id')->nullable();
             $table->text('address', 500);
             $table->string('phone', 20)->nullable();
             $table->string('mobile', 20);
