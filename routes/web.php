@@ -35,3 +35,4 @@ Route::get('departments/add', 'DepartmentController@departmentadd');
 
 Route::resource('/doctor', 'DoctorController');
 Route::get('doctors/add', 'DoctorController@DoctorAdd');
+// Route::post('doctors/post', 'DoctorController@DoctorPost');

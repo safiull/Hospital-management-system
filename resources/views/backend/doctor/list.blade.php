@@ -16,11 +16,11 @@
 <div class="block-header">
     <div class="row">
         <div class="col-lg-6 col-md-8 col-sm-12">
-            <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> All Departments</h2>
+            <h2><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> All Doctors</h2>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>                            
-                <li class="breadcrumb-item">Department</li>
-                <li class="breadcrumb-item active">All Departments</li>
+                <li class="breadcrumb-item">Doctors</li>
+                <li class="breadcrumb-item active">All Doctors</li>
             </ul>
         </div>            
         <div class="col-lg-6 col-md-4 col-sm-12 text-right">
@@ -37,7 +37,7 @@
 	<div class="col-lg-12">
         <div class="card">
             <div class="header">
-                <a href="{{ url('departments/add') }}" class="btn btn-info btn-sm"><i class="fa fa-plus-circle"></i> Add Department</a>    
+                <a href="{{ url('doctors/add') }}" class="btn btn-info btn-sm"><i class="fa fa-plus-circle"></i> Add Doctors</a>    
 
                 @if (session('success_status'))
                     <div class="alert alert-success alert-dismissible fade show mt-2 mb-0" role="alert">
@@ -59,35 +59,46 @@
                 <table id="table-dragger" class="table table-bordered table-striped table-hover dataTable js-exportable">
                     <thead>
                         <tr>
-                            <th>SL.NO<i class="table-dragger-handle"></i></th>
-                            <th>Department Name<i class="table-dragger-handle"></i></th>
-                            <th>Description<i class="table-dragger-handle"></i></th>
-                            <th>Status<i class="table-dragger-handle"></i></th>
-                            <th>Action<i class="table-dragger-handle"></i></th>
+                            <th>SL.NO</th>
+                            <th>Image</th>
+                            <th>Name<i class="table-dragger-handle"></i></th>
+                            <th>E-mail</th>
+                            <th>Department</th>
+                            <th>Designation</th>
+                            <th>Mobile</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>SL.NO</th>
-                            <th>Department Name</th>
-                            <th>Description</th>
-                            <th>Status</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>E-mail</th>
+                            <th>Department</th>
+                            <th>Designation</th>
+                            <th>Mobile</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach ($depertments as $depertment)
+                        @foreach ($doctors as $doctor)
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
-                                <td>{{ $depertment->name }}</td>
-                                <td>{{ $depertment->description }}</th>
-                                <td>{{ $depertment->status == 1 ? "Active":"Inactive" }}</td>
+                                <td>
+                                    <img style="max-width: 50px" src="{{ asset('dashboard/photo/doctor_image') }}/{{ $doctor->image }}" class="img-fluid" alt="">
+                                </td>
+                                <td>{{ $doctor->first_name }}</th>
+                                <td>{{ $doctor->email }}</th>
+                                <td>{{ $doctor->department }}</th>
+                                <td>{{ $doctor->designation }}</th>
+                                <td>{{ $doctor->mobile }}</th>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <a class="btn btn-warning btn-sm" href="{{ route('department.show', $depertment->id) }}">
+                                        <a class="btn btn-warning btn-sm" href="{{ route('department.show', $doctor->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <form method="POST" action="{{ route('department.destroy', $depertment->id) }}">
+                                        <form method="POST" action="{{ route('department.destroy', $doctor->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">

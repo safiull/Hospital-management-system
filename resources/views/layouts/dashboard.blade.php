@@ -242,7 +242,7 @@
                             <li class="@yield('doctor_active')"><a href="javascript:void(0);" class="has-arrow"><i class="icon-layers"></i><span>Doctor</span> </a>
                                 <ul>
                                     <li class="@yield('doctor_add_active')"><a href="{{ url('doctors/add') }}">Add Doctor</a></li>
-                                    <li class="@yield('doctor_list_active')"><a href="{{ route('department.index') }}">All Doctors</a></li>
+                                    <li class="@yield('doctor_list_active')"><a href="{{ route('doctor.index') }}">All Doctors</a></li>
                                 </ul>
                             </li>
                             {{-- <li><a href="our-centres.html"><i class="icon-pointer"></i>WorldWide Centres</a></li>

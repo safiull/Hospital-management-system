@@ -6,6 +6,12 @@
 @section('doctor_add_active')
     active
 @endsection
+@section('top_css')
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/bootstrap-markdown/bootstrap-markdown.min.css">
+    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/dropify/css/dropify.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+@endsection
 
 
     <div class="block-header">
@@ -35,11 +41,18 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="header">
-                    <a href="{{ route('department.index') }}" class="btn btn-info btn-sm"><i class="fa fa-list"></i> Doctor List</a>                            
+                    <a href="{{ route('doctor.index') }}" class="btn btn-info btn-sm"><i class="fa fa-list"></i> Doctor List</a>  
+
+                    @if (session('success_status'))
+                        <div class="alert alert-success alert-dismissible fade show mt-2 mb-0" role="alert">
+                          <strong class="text-primary">Success! &#128521;</strong> {{ session('success_status') }}
+                        </div>
+                    @endif        
+                                    
                 </div>
                 <hr class="m-0 p-0">
                 <div class="body clearfix">
-                    <form action="{{ route('department.store') }}" method="POST">
+                    <form action="{{ route('doctor.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row">
@@ -113,7 +126,13 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input id="department" type="text" class="form-control" placeholder="Department" name="department" value="{{ old('department') }}">
+                                    <select style="border: 1px solid #ced4da !important;" id="department" name="department" class="selectpicker form-control" data-live-search="true">
+                                      <option>Select Department</option>
+                                      @foreach ($depertments as $depertment)
+                                        <option value="{{ $depertment->id }}">{{ $depertment->name }}</option>
+                                      @endforeach
+                                    </select>
+
                                     @error('department')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -126,9 +145,22 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="7" id="address" placeholder="Address">
+                                    <textarea class="form-control" rows="7" name="address" id="address" placeholder="Address">
                                         {{ old('address') }}
                                     </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="mobile">Phone No</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input id="phone" type="number" class="form-control" placeholder="Phone No" name="phone" value="{{ old('phone') }}">
+                                    @error('phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -145,19 +177,122 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="row">
+                        <div class="row">
                             <div class="col-sm-2">
-                                <label for="status">Description</label>
+                                <label for="markdown-editor">Short Biography</label>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="radio" id="1" name="status" value="1" checked>&nbsp;
+                                    <textarea id="markdown-editor" name="short_biography" data-provide="markdown" rows="10"></textarea>
+                                    @error('short_biography')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="mobile">Picture</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="file" class="dropify" name="image">
+                                    @error('image')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="specialist">Specialist <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input id="specialist" type="text" class="form-control" placeholder="Specialist" name="specialist" value="{{ old('specialist') }}">
+                                    @error('specialist')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="birth_date">Date of Birth</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input data-provide="datepicker" data-date-autoclose="true" id="birth_date" type="date" class="form-control" data-date-format="dd/mm/yyyy" name="birth_date" value="{{ old('birth_date') }}">
+                                    @error('birth_date')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Sex <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="radio" name="sex" value="Male" checked>&nbsp;
+                                    <label for="1">Male</label>&nbsp;&nbsp;
+                                    <input type="radio" name="sex" value="Female">&nbsp;
+                                    <label for="0">Female</label><br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="blood_group">Blood Group</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <select name="blood_group" id="blood_group" class="selectpicker form-control" data-live-search="true">
+                                      <option value="A+">A+</option>
+                                      <option value="A-">A-</option>
+                                      <option value="B+">B+</option>
+                                      <option value="B-">B-</option>
+                                      <option value="O+">O+</option>
+                                      <option value="O-">O-</option>
+                                      <option value="AB+">AB+</option>
+                                      <option value="AB-">AB-</option>
+                                    </select>
+
+                                    @error('blood_group')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Education/Degree</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <textarea id="markdown-editor" name="education_degree" data-provide="markdown" rows="10"></textarea>
+                                    @error('education_degree')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="status">Status</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="radio" id="status" name="status" value="1" checked>&nbsp;
                                     <label for="1">Active</label>&nbsp;&nbsp;
-                                    <input type="radio" id="0" name="status" value="0">&nbsp;
+                                    <input type="radio" id="status" name="status" value="0">&nbsp;
                                     <label for="0">Inactive</label><br>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
+
                         <div class="row">
                             <div class="col-sm-6 offset-sm-2">
                                 <div class="form-group">
@@ -172,4 +307,17 @@
         </div>
     </div>
 
+@endsection
+@section('footer_top_script')
+<script src="{{ asset('dashboard') }}/assets/vendor/dropify/js/dropify.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+@endsection
+@section('footer_bottom_script')
+<script src="{{ asset('dashboard') }}/assets/vendor/markdown/markdown.js"></script>
+<script src="{{ asset('dashboard') }}/assets/vendor/to-markdown/to-markdown.js"></script>
+<script src="{{ asset('dashboard') }}/assets/vendor/bootstrap-markdown/bootstrap-markdown.js"></script>
+<script src="{{ asset('dashboard') }}/light/assets/js/pages/forms/dropify.js"></script>
 @endsection
