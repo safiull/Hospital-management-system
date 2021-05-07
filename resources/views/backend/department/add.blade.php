@@ -6,6 +6,9 @@
 @section('dpt_add_active')
     active
 @endsection
+@section('top_css')
+<link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/parsleyjs/css/parsley.css">
+@endsection
 
 
     <div class="block-header">
@@ -39,7 +42,7 @@
                 </div>
                 <hr class="m-0 p-0">
                 <div class="body clearfix">
-                    <form action="{{ route('department.store') }}" method="POST">
+                    <form action="{{ route('department.store') }}" method="POST" data-parsley-validate novalidate>
                         @csrf
 
                         <div class="row">
@@ -48,7 +51,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input id="dep_name" type="text" class="form-control" placeholder="Departments Name" name="name" value="{{ old('name') }}">
+                                    <input id="dep_name" type="text" class="form-control" placeholder="Departments Name" name="name" value="{{ old('name') }}" required data-parsley-minlength="3">
                                     @error('name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -61,9 +64,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <textarea id="dep_description" rows="6" class="form-control no-resize" placeholder="Description..." name="description">
-                                        {{ old('description') }}
-                                    </textarea>
+                                    <textarea id="dep_description" rows="6" class="form-control no-resize" placeholder="Description..." name="description">{{ old('description') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -94,4 +95,8 @@
         </div>
     </div>
 
+@endsection
+
+@section('footer_top_script')
+<script src="{{ asset('dashboard') }}/assets/vendor/parsleyjs/js/parsley.min.js"></script>
 @endsection

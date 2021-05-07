@@ -25,9 +25,8 @@ class DoctorController extends Controller
 
     public function DoctorAdd()
     {
-        $depertments = Department::all();
         return view('backend.doctor.add', [
-            'depertments' => $depertments
+            'depertments' => Department::all()
         ]);
     }
 
@@ -103,7 +102,10 @@ class DoctorController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('backend.doctor.edit', [
+            'doctor' => Doctor::find($id),
+            'depertments' => Department::all()
+        ]);
     }
 
     /**
@@ -114,7 +116,10 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
-        //
+        // return view('backend.doctor.edit', [
+        //     'doctor' => Doctor::find($id),
+        //     'depertments' => Department::all()
+        // ]);
     }
 
     /**
@@ -126,7 +131,40 @@ class DoctorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'first_name' => 'required|string|between:2,30',
+            'last_name' => 'required|between:2,30',
+            'designation' => 'nullable|string|max:250',
+            'department_id' => 'nullable|string|max:250',
+            'address' => 'required',
+            'phone' => 'nullable|string',
+            'mobile' => 'required|min:5|max:15|regex:/[0-9]{9}/|not_regex:/(([a-zA-z])(\d)?$)/u',
+            'short_biography' => 'nullable|string',
+            'image' => 'nullable|image',
+            'specialist' => 'required|string',
+            'birth_date' => 'nullable|date',
+            'sex' => 'required|string',
+            'blood_group' => 'nullable|min:2|max:5',
+            'education_degree' => 'nullable|string',
+            'status' => 'required|integer',
+        ]);
+
+        Doctor::find($id)->update($request->except('_token', '_method','image'));
+
+        if ($request->hasFile('image')) {
+            // unlink(base_path('public/dashboard/photo/doctor_image/'.Doctor::find($id)->image));
+
+            $uploaded_photo = $request->file('image');
+            $photo_name = $id.".".$uploaded_photo->getClientOriginalExtension($uploaded_photo);
+            $new_photo_location = 'public/dashboard/photo/doctor_image/'.$photo_name;
+
+            Image::make($uploaded_photo)->resize(500,385)->save(base_path($new_photo_location), 50);
+            Doctor::find($id)->update([
+                'image' => $photo_name
+            ]);
+        }
+
+        return redirect('/doctor')->with('success_status', 'Doctor updated successfully!');
     }
 
     /**
