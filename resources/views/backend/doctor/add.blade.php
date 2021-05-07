@@ -3,14 +3,17 @@
 @section('doctor_active')
     active
 @endsection
+
 @section('doctor_add_active')
     active
 @endsection
+
 @section('top_css')
-    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/bootstrap-markdown/bootstrap-markdown.min.css">
-    <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/dropify/css/dropify.min.css">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/bootstrap-markdown/bootstrap-markdown.min.css">
+<link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/dropify/css/dropify.min.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/parsleyjs/css/parsley.css">
 @endsection
 
 
@@ -52,7 +55,7 @@
                 </div>
                 <hr class="m-0 p-0">
                 <div class="body clearfix">
-                    <form action="{{ route('doctor.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('doctor.store') }}" method="POST" enctype="multipart/form-data" data-parsley-validate novalidate>
                         @csrf
 
                         <div class="row">
@@ -61,7 +64,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input id="first_name" type="text" class="form-control" placeholder="First Name" name="first_name" value="{{ old('first_name') }}">
+                                    <input id="first_name" type="text" class="form-control" placeholder="First Name" name="first_name" value="{{ old('first_name') }}" required data-parsley-minlength="2">
                                     @error('first_name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -74,7 +77,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input id="last_name" type="text" class="form-control" placeholder="Last Name" name="last_name" value="{{ old('last_name') }}">
+                                    <input id="last_name" type="text" class="form-control" placeholder="Last Name" name="last_name" value="{{ old('last_name') }}" required data-parsley-minlength="3">
                                     @error('last_name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -87,7 +90,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input id="email" type="email" class="form-control" placeholder="Email Address" name="email" value="{{ old('email') }}">
+                                    <input id="email" type="email" class="form-control" placeholder="Email Address" name="email" value="{{ old('email') }}" required>
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -100,7 +103,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input id="password" type="password" class="form-control" placeholder="Password" name="password" value="{{ old('password') }}">
+                                    <input id="password" type="password" class="form-control" placeholder="Password" name="password" value="{{ old('password') }}" required data-parsley-minlength="4">
                                     @error('password')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -145,9 +148,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="7" name="address" id="address" placeholder="Address">
-                                        {{ old('address') }}
-                                    </textarea>
+                                    <textarea class="form-control" rows="7" name="address" id="address" placeholder="Address" required data-parsley-minlength="4">{{ old('address') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +171,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input id="mobile" type="number" class="form-control" placeholder="Mobile No" name="mobile" value="{{ old('mobile') }}">
+                                    <input id="mobile" type="number" class="form-control" placeholder="Mobile No" name="mobile" value="{{ old('mobile') }}" required data-parsley-length="[5,15]">
                                     @error('mobile')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -209,7 +210,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input id="specialist" type="text" class="form-control" placeholder="Specialist" name="specialist" value="{{ old('specialist') }}">
+                                    <input id="specialist" type="text" class="form-control" placeholder="Specialist" name="specialist" value="{{ old('specialist') }}" required>
                                     @error('specialist')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -236,7 +237,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="radio" name="sex" value="Male" checked>&nbsp;
+                                    <input type="radio" name="sex" value="Male" checked required data-parsley-errors-container="#error-radio">&nbsp;
                                     <label for="1">Male</label>&nbsp;&nbsp;
                                     <input type="radio" name="sex" value="Female">&nbsp;
                                     <label for="0">Female</label><br>
@@ -314,7 +315,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <!-- (Optional) Latest compiled and minified JavaScript translation files -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+<script src="{{ asset('dashboard') }}/assets/vendor/parsleyjs/js/parsley.min.js"></script>
 @endsection
+
 @section('footer_bottom_script')
 <script src="{{ asset('dashboard') }}/assets/vendor/markdown/markdown.js"></script>
 <script src="{{ asset('dashboard') }}/assets/vendor/to-markdown/to-markdown.js"></script>

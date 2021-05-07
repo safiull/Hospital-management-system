@@ -55,17 +55,18 @@
                     </div>
                 @endif                       
             </div>
-            <div class="body">
+            <div class="body table-responsive">
                 <table id="table-dragger" class="table table-bordered table-striped table-hover dataTable js-exportable">
                     <thead>
                         <tr>
                             <th>SL.NO</th>
-                            <th>Image</th>
-                            <th>Name<i class="table-dragger-handle"></i></th>
-                            <th>E-mail</th>
+                            <th>Image<i class="table-dragger-handle"></th>
+                            <th>First name</th>
+                            <th>Last name</th>
                             <th>Department</th>
-                            <th>Designation</th>
+                            <th>E-mail</th>
                             <th>Mobile</th>
+                            <th>Phone</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -73,12 +74,10 @@
                         <tr>
                             <th>SL.NO</th>
                             <th>Image</th>
-                            <th>Name</th>
                             <th>First name</th>
                             <th>Last name</th>
                             <th>Department</th>
                             <th>E-mail</th>
-                            <th>Designation</th>
                             <th>Mobile</th>
                             <th>Phone</th>
                             <th>Action</th>
@@ -95,13 +94,12 @@
                                 <td>{{ $doctor->last_name }}</td>
                                 <td>{{ $doctor->department->name }}</td>
                                 <td>{{ $doctor->email }}</td>
-                                <td>{{ $doctor->designation }}</td>
                                 <td>{{ $doctor->mobile }}</td>
                                 <td>{{ $doctor->phone }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group">
                                         <a class="btn btn-info btn-sm" href="{{ route('doctor.edit', $doctor->id) }}">
-                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-eye"></i></i>
                                         </a>
                                         <a class="btn btn-warning btn-sm" href="{{ route('doctor.show', $doctor->id) }}">
                                             <i class="fa fa-edit"></i>
