@@ -12,14 +12,14 @@
 <meta name="description" content="Lucid Bootstrap 4.1.1 Admin Template">
 <meta name="author" content="WrapTheme, design by: ThemeMakker.com">
 
-<link rel="icon" href="favicon.ico" type="image/x-icon">
+{{-- <link rel="icon" href="favicon.ico" type="image/x-icon"> --}}
 <!-- VENDOR CSS -->
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/font-awesome/css/font-awesome.min.css">
 
-<link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/chartist/css/chartist.min.css">
-<link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css">
-<link rel="stylesheet" href="{{ asset('dashboard') }}/assets/vendor/toastr/toastr.min.css">
+
+{{-- Yield css styles --}}
+@yield('top_css')
 
 <!-- MAIN CSS -->
 <link rel="stylesheet" href="{{ asset('dashboard') }}/light/assets/css/main.css">
@@ -204,8 +204,8 @@
                 <div class="tab-pane active" id="menu">
                     <nav class="sidebar-nav">
                         <ul class="main-menu metismenu">
-                            <li class="active"><a href="index.html"><i class="icon-home"></i><span>Dashboard</span></a></li>
-                            <li><a href="app-appointment.html"><i class="icon-calendar"></i>Appointment</a></li>
+                            <li @yield('dashboard_active')><a href="index.html"><i class="icon-home"></i><span>Dashboard</span></a></li>
+                            {{-- <li><a href="app-appointment.html"><i class="icon-calendar"></i>Appointment</a></li>
                             <li><a href="app-taskboard.html"><i class="icon-list"></i>Taskboard</a></li>
                             <li><a href="app-inbox.html"><i class="icon-home"></i>Inbox App</a></li>
                             <li><a href="app-chat.html"><i class="icon-bubbles"></i>Chat App</a></li>
@@ -231,22 +231,21 @@
                                     <li><a href="payments-add.html">Add Payment</a></li>
                                     <li><a href="payments-invoice.html">Invoice</a></li>
                                 </ul>
-                            </li>
-                            <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-layers"></i><span>Departments</span> </a>
+                            </li> --}}
+
+                            <li class="@yield('department_active')"><a href="javascript:void(0);" class="has-arrow"><i class="icon-layers"></i><span>Departments</span> </a>
                                 <ul>
-                                    <li><a href="depa-add.html">Add</a></li>
-                                    <li><a href="depa-all.html">All Departments</a></li>
-                                    <li><a href="javascript:void(0);">Cardiology</a></li>
-                                    <li><a href="javascript:void(0);">Pulmonology</a></li>
-                                    <li><a href="javascript:void(0);">Gynecology</a></li>
-                                    <li><a href="javascript:void(0);">Neurology</a></li>
-                                    <li><a href="javascript:void(0);">Urology</a></li>
-                                    <li><a href="javascript:void(0);">Gastrology</a></li>
-                                    <li><a href="javascript:void(0);">Pediatrician</a></li>
-                                    <li><a href="javascript:void(0);">Laboratory</a></li>
+                                    <li class="@yield('dpt_add_active')"><a href="{{ url('departments/add') }}">Add Departments</a></li>
+                                    <li class="@yield('dpt_list_active')"><a href="{{ route('department.index') }}">All Departments</a></li>
                                 </ul>
                             </li>
-                            <li><a href="our-centres.html"><i class="icon-pointer"></i>WorldWide Centres</a></li>
+                            <li class="@yield('doctor_active')"><a href="javascript:void(0);" class="has-arrow"><i class="icon-layers"></i><span>Doctor</span> </a>
+                                <ul>
+                                    <li class="@yield('doctor_add_active')"><a href="{{ url('doctors/add') }}">Add Doctor</a></li>
+                                    <li class="@yield('doctor_list_active')"><a href="{{ route('doctor.index') }}">All Doctors</a></li>
+                                </ul>
+                            </li>
+                            {{-- <li><a href="our-centres.html"><i class="icon-pointer"></i>WorldWide Centres</a></li>
                             <li>
                                 <a href="#Authentication" class="has-arrow"><i class="icon-lock"></i><span>Authentication</span></a>
                                 <ul>
@@ -286,7 +285,7 @@
                                     <li><a href="page-testimonials.html">Testimonials</a></li>
                                     <li><a href="page-faq.html">FAQs</a></li>
                                 </ul>
-                            </li>
+                            </li> --}}
                         </ul>
                     </nav>
                 </div>
@@ -377,7 +376,7 @@
                         <li class="online">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="../assets/images/xs/avatar4.jpg" alt="">
+                                    <img class="media-object " src="{{ asset('dashboard') }}/assets/images/xs/avatar4.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Chris Fox</span>
                                         <span class="message">Dentist</span>
@@ -389,7 +388,7 @@
                         <li class="online">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="../assets/images/xs/avatar5.jpg" alt="">
+                                    <img class="media-object " src="{{ asset('dashboard') }}/assets/images/xs/avatar5.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Joge Lucky</span>
                                         <span class="message">Gynecologist</span>
@@ -401,7 +400,7 @@
                         <li class="offline">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="../assets/images/xs/avatar2.jpg" alt="">
+                                    <img class="media-object " src="{{ asset('dashboard') }}/assets/images/xs/avatar2.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Isabella</span>
                                         <span class="message">CEO, WrapTheme</span>
@@ -413,7 +412,7 @@
                         <li class="offline">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="../assets/images/xs/avatar1.jpg" alt="">
+                                    <img class="media-object " src="{{ asset('dashboard') }}/assets/images/xs/avatar1.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Folisise Chosielie</span>
                                         <span class="message">Physical Therapy</span>
@@ -425,7 +424,7 @@
                         <li class="online">
                             <a href="javascript:void(0);">
                                 <div class="media">
-                                    <img class="media-object " src="../assets/images/xs/avatar3.jpg" alt="">
+                                    <img class="media-object " src="{{ asset('dashboard') }}/assets/images/xs/avatar3.jpg" alt="">
                                     <div class="media-body">
                                         <span class="name">Dr. Alexander</span>
                                         <span class="message">Audiology</span>
@@ -464,52 +463,16 @@
                             <span>Blush</span>
                         </li>
                     </ul>
-                    <hr>
-                    <h6>General Settings</h6>
-                    <ul class="setting-list list-unstyled">
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <span>Report Panel Usag</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <span>Email Redirect</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox" checked>
-                                <span>Notifications</span>
-                            </label>                      
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox" checked>
-                                <span>Auto Updates</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox">
-                                <span>Offline</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label class="fancy-checkbox">
-                                <input type="checkbox" name="checkbox" checked>
-                                <span>Location Permission</span>
-                            </label>
-                        </li>
-                    </ul>
                 </div>             
             </div>          
         </div>
     </div>
-
-    @yield('dashboard_content')
+    {{-- Main content --}}
+    <div id="main-content">
+        <div class="container-fluid">
+            @yield('dashboard_content')
+        </div>
+    </div>
     
 </div>
 
@@ -517,14 +480,13 @@
 <script src="{{ asset('dashboard') }}/light/assets/bundles/libscripts.bundle.js"></script>
 <script src="{{ asset('dashboard') }}/light/assets/bundles/vendorscripts.bundle.js"></script>
 
-<script src="{{ asset('dashboard') }}/light/assets/bundles/chartist.bundle.js"></script>
-<script src="{{ asset('dashboard') }}/light/assets/bundles/knob.bundle.js"></script> <!-- Jquery Knob-->
-<script src="{{ asset('dashboard') }}/light/assets/bundles/flotscripts.bundle.js"></script> <!-- flot charts Plugin Js -->
-<script src="{{ asset('dashboard') }}/assets/vendor/toastr/toastr.js"></script>
-<script src="{{ asset('dashboard') }}/assets/vendor/flot-charts/jquery.flot.selection.js"></script>
+@yield('footer_top_script')
 
 <script src="{{ asset('dashboard') }}/light/assets/bundles/mainscripts.bundle.js"></script>
-<script src="{{ asset('dashboard') }}/light/assets/js/index.js"></script>
+
+{{-- <script src="{{ asset('dashboard') }}/light/assets/js/index.js"></script> --}}
+@yield('footer_bottom_script')
+
 </body>
 
 <!-- Mirrored from www.wrraptheme.com/templates/lucid/hospital/light/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Feb 2021 16:45:28 GMT -->

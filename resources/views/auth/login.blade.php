@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="signin-password" class="control-label sr-only">Password</label>
-                                    <input id="signin-password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password>
+                                    <input id="signin-password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" autocomplete="current-password>
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -60,6 +60,7 @@
                                         </span>
                                     @enderror
                                 </div>
+                                <div class="clearfix"></div>
                                 <div class="form-group clearfix mt-3">
                                     <label class="fancy-checkbox element-left">
                                         <input name="remember" type="checkbox" {{ old('remember') ? 'checked' : '' }}>
@@ -67,7 +68,7 @@
                                     </label>								
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-                                <div class="bottom">
+                                <div class="bottom mt-2">
                                     <span class="helper-text m-b-10"><i class="fa fa-lock"></i> <a href="{{ route('password.request') }}">Forgot password?</a></span>
                                 </div>
                             </form>
